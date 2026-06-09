@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linguaflow - AI 文档翻译</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">🌊 v0.1.0 · 自备 API Key 免费</div>
+  <h1>Linguaflow</h1>
+  <p>在浏览器里直接用 AI 翻译你的 README 和文档。<br>自带 Key 免费，我来处理 ¥9.9/次。</p>
+</div>
+
+<div class="container">
+
+  <!-- How it works -->
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <h3>粘贴或上传</h3>
+      <p>把你的 README.md 或文档贴进来</p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <h3>选择语言</h3>
+      <p>支持 20+ 目标语言</p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <h3>一键翻译</h3>
+      <p>AI 上下文翻译，格式完整保留</p>
+    </div>
+    <div class="step">
+      <div class="num">4</div>
+      <h3>下载使用</h3>
+      <p>复制或下载翻译结果</p>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" data-tab="translate">翻译</button>
+    <button class="tab" data-tab="pricing">定价</button>
+    <button class="tab" data-tab="settings">设置</button>
+  </div>
+
+  <!-- Tab: Translate -->
+  <div id="tab-translate" class="tab-content">
+    <div class="card">
+      <div id="alert" class="alert"></div>
+
+      <div class="form-group">
+        <label>源文本 (Markdown)</label>
+        <textarea id="sourceText" placeholder="粘贴你的 README.md 或文档内容..."></textarea>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>目标语言</label>
+          <select id="targetLang">
+            <option value="zh-CN">简体中文</option>
+            <option value="zh-TW">繁體中文</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
+            <option value="pt-BR">Português (BR)</option>
+            <option value="ru">Русский</option>
+            <option value="vi">Tiếng Việt</option>
+            <option value="th">ภาษาไทย</option>
+            <option value="ar">العربية</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>上传文件（可选）</label>
+          <input type="file" id="fileInput" accept=".md,.txt,.markdown">
+        </div>
+      </div>
+
+      <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+        <input type="checkbox" id="useMyKey" checked>
+        <label for="useMyKey" style="margin:0;display:inline;">使用我的 API Key（免费）</label>
+      </div>
+
+      <button class="btn btn-primary btn-block btn-lg" id="translateBtn">
+        🌍 开始翻译
+      </button>
+
+      <!-- Result -->
+      <div id="result" class="result">
+        <div class="result-header">
+          <h3>翻译结果</h3>
+          <div class="result-actions">
+            <button class="btn btn-outline" id="copyBtn">📋 复制</button>
+            <button class="btn btn-outline" id="downloadBtn">⬇ 下载</button>
+          </div>
+        </div>
+        <div class="result-content" id="resultText"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab: Pricing -->
+  <div id="tab-pricing" class="tab-content" style="display:none;">
+    <div class="pricing">
+      <div class="plan">
+        <h3>🆓 免费</h3>
+        <div class="price">¥0 <span>终身</span></div>
+        <ul>
+          <li>自带 API Key 无限翻译</li>
+          <li>保留代码/链接/表格格式</li>
+          <li>支持 20+ 语言</li>
+          <li>下载翻译结果</li>
+        </ul>
+        <button class="btn btn-outline btn-block" onclick="App.switchTab('translate')">开始使用</button>
+      </div>
+      <div class="plan featured">
+        <h3>⚡ 单次翻译</h3>
+        <div class="price">¥9.9 <span>/次</span></div>
+        <ul>
+          <li>不用准备 API Key</li>
+          <li>我来承担 API 费用</li>
+          <li>1 小时内交付</li>
+          <li>含 1 轮修改</li>
+        </ul>
+        <button class="btn btn-primary btn-block" onclick="alert('即将上线，敬请期待')">使用微信支付</button>
+      </div>
+      <div class="plan">
+        <h3>📦 批量套餐</h3>
+        <div class="price">¥99 <span>/月</span></div>
+        <ul>
+          <li>50 次翻译</li>
+          <li>不用准备 API Key</li>
+          <li>支持 GitHub 项目批量</li>
+          <li>优先处理</li>
+        </ul>
+        <button class="btn btn-outline btn-block" onclick="alert('即将上线，敬请期待')">联系我</button>
+      </div>
+    </div>
+    <div class="card" style="text-align:center;">
+      <p style="color:#666;">你也可以直接闲鱼找我，搜索「AI文档翻译」</p>
+    </div>
+  </div>
+
+  <!-- Tab: Settings -->
+  <div id="tab-settings" class="tab-content" style="display:none;">
+    <div class="card">
+      <h2>⚙️ 设置</h2>
+      <p style="color:#666;margin-bottom:16px;">免费模式需要你自己的 API Key。设置后保存在浏览器本地，不会上传到服务器。</p>
+
+      <div class="form-group">
+        <label>API Key</label>
+        <input type="password" id="apiKey" class="api-key-input" placeholder="sk-... 或 LINGUAFLOW_API_KEY">
+        <div class="api-key-hint">💡 可用 DeepSeek / OpenAI / 任何兼容 API</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label>API 地址</label>
+          <input type="text" id="apiBase" placeholder="https://api.openai.com/v1">
+        </div>
+        <div class="form-group">
+          <label>模型</label>
+          <select id="model">
+            <option value="gpt-4o-mini">GPT-4o-mini（推荐）</option>
+            <option value="gpt-4o">GPT-4o</option>
+            <option value="deepseek-chat">DeepSeek Chat</option>
+            <option value="deepseek-v4-flash">DeepSeek V4 Flash</option>
+          </select>
+        </div>
+      </div>
+
+      <button class="btn btn-primary" id="saveSettings">💾 保存设置</button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>
+      <a href="https://github.com/ugooe123/linguaflow" target="_blank">GitHub</a>
+      ·
+      <a href="https://github.com/sponsors/ugooe123" target="_blank">Sponsor</a>
+      ·
+      <a href="https://afdian.com/a/linguaflow" target="_blank">爱发电</a>
+    </p>
+    <p style="margin-top:8px;">Powered by AI · MIT License</p>
+  </div>
+
+</div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
